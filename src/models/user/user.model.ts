@@ -6,7 +6,7 @@ export interface CreateUserModel {
     password: string
 }
 
-export interface UserModel{
+export interface UserModelResponse{
     id: string
     name: string
     email: string
@@ -15,9 +15,9 @@ export interface UserModel{
     updatedAt: Date
 }
 
-export interface UserRepository {
-    create(user: CreateUserModel): Promise<UserModel>
-    findUserById(id: string): Promise<UserModel>
-    updateUserById(id: string, user: CreateUserModel): Promise<UserModel>
+export interface UserModel {
+    create(user: CreateUserModel): Promise<UserModelResponse>
+    findUserById(id: string): Promise<UserModelResponse>
+    updateUserById(id: string, user: CreateUserModel): Promise<UserModelResponse>
     deleteUserById(id: string): Promise<void>
 }
