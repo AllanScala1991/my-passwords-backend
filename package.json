@@ -4,7 +4,10 @@
   "description": "api da aplicação my passwords",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/server.ts"
+    "dev": "nodemon src/server.ts",
+    "test": "jest --coverage",
+    "build": "tsc",
+    "start": "node build/src/server.js"
   },
   "keywords": [],
   "author": "",
