@@ -47,6 +47,40 @@ describe("User Repository Tests", () => {
         expect(user.name).toEqual("test");
     })
 
+    test("Find user by username", async () => {
+        jest.spyOn(prisma.user, "findUnique").mockImplementationOnce((): any => {
+            return {
+                id: "123", 
+                name: "test",
+                email: "test@mail.com",
+                username: "test", 
+                createdAt: new Date(),
+                updatedAt: new Date()
+            }
+        })
+
+        const user = await userRepository.findUserByUsername("test");
+
+        expect(user.username).toEqual("test");
+    })
+
+    test("Find user by email", async () => {
+        jest.spyOn(prisma.user, "findUnique").mockImplementationOnce((): any => {
+            return {
+                id: "123", 
+                name: "test",
+                email: "test@mail.com",
+                username: "test", 
+                createdAt: new Date(),
+                updatedAt: new Date()
+            }
+        })
+
+        const user = await userRepository.findUserByEmail("test@mail.com");
+
+        expect(user.email).toEqual("test@mail.com");
+    })
+
     test("Update user by id", async () => {
         const payload = {
             name: "update name",

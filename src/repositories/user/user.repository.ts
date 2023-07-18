@@ -16,6 +16,22 @@ export class UserRepository implements UserModel {
             }
         });
     }
+    
+    async findUserByUsername(username: string): Promise<UserModelResponse> {
+        return await prisma.user.findUnique({
+            where: {
+                username: username
+            }
+        });
+    }
+
+    async findUserByEmail(email: string): Promise<UserModelResponse> {
+        return await prisma.user.findUnique({
+            where: {
+                email: email
+            }
+        });
+    }
 
     async updateUserById(id: string, user: CreateUserModel): Promise<UserModelResponse> {
         return await prisma.user.update({
