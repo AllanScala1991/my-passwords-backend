@@ -4,6 +4,7 @@ export interface CreateUserModel {
     email: string
     username: string
     password: string
+    createdAt?: Date
 }
 
 export interface UserModelResponse{
@@ -11,6 +12,7 @@ export interface UserModelResponse{
     name: string
     email: string
     username: string
+    password: string
     createdAt: Date
     updatedAt: Date
 }

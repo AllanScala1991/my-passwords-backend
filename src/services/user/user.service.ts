@@ -36,6 +36,8 @@ export class UserService {
 
         const newUser = await this.userRepository.create(user);
 
+        delete newUser.password;
+
         return {status: 201, data: newUser};
     }
 
@@ -57,7 +59,14 @@ export class UserService {
 
         if(!isUserExists) return { status: 400, message: "Usuário não localizado." }
 
+        const passwordHash = await this.encrypter.encrypt({value: user.password, salt: 8});
+
+        user.password = passwordHash
+        user.createdAt = new Date();
+
         const updateUser = await this.userRepository.updateUserById(id, user);
+
+        delete updateUser.password;
 
         return { status: 200, data: updateUser };
     }
