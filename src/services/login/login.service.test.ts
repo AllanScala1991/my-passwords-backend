@@ -23,7 +23,7 @@ describe("Login Service Tests", () => {
         const userLogin = await loginService.handle({username: "", password: "123"});
 
         expect(userLogin.status).toEqual(400);
-        expect(userLogin.message).toEqual("Os campos de username e senha são obrigatórios.");
+        expect(userLogin.message).toEqual("Os campos de Usuário e Senha são obrigatórios.");
     })
     
     test("Send invalid username", async () => {

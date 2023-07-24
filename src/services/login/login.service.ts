@@ -21,7 +21,7 @@ export class LoginService {
             }
         }
 
-        if(isPayloadEmpty === true) return {status: 400, message: "Os campos de username e senha são obrigatórios."};
+        if(isPayloadEmpty === true) return {status: 400, message: "Os campos de Usuário e Senha são obrigatórios."};
 
         const isUserExists = await this.userRepository.findUserByUsername(user.username);
 
