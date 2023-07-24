@@ -1,4 +1,4 @@
-import { Request, Response, response } from "express";
+import { Request, Response } from "express";
 import { EncrypterModel } from "../../models/encrypter/encrypter.model";
 import { UserRepository } from "../../repositories/user/user.repository";
 import { UserService } from "../../services/user/user.service";
