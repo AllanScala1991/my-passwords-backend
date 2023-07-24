@@ -13,7 +13,7 @@ export interface PasswordResponseModel extends CreatePasswordModel {
 
 export interface PasswordModel {
     create(password: CreatePasswordModel): Promise<PasswordResponseModel>
-    updatePassword(password: CreatePasswordModel): Promise<PasswordResponseModel>
+    updatePassword(id: string, password: CreatePasswordModel): Promise<PasswordResponseModel>
     findPasswordByTitle(title: string): Promise<PasswordResponseModel[]>
     deletePasswordById(id: string): Promise<void>
 }
