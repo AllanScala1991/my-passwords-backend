@@ -62,7 +62,7 @@ export class UserService {
         const passwordHash = await this.encrypter.encrypt({value: user.password, salt: 8});
 
         user.password = passwordHash
-        user.createdAt = new Date();
+        user.updatedAt = new Date();
 
         const updateUser = await this.userRepository.updateUserById(id, user);
 

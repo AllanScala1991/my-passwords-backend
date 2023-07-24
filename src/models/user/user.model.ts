@@ -4,17 +4,12 @@ export interface CreateUserModel {
     email: string
     username: string
     password: string
-    createdAt?: Date
+    updatedAt?: Date
 }
 
-export interface UserModelResponse{
+export interface UserModelResponse extends CreateUserModel{
     id: string
-    name: string
-    email: string
-    username: string
-    password: string
     createdAt: Date
-    updatedAt: Date
 }
 
 export interface UserModel {
