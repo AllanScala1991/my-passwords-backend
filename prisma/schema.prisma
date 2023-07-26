@@ -31,7 +31,8 @@ model Password {
 }
 
 model Keys {
-  userId    String
+  id        String   @id @default(uuid())
+  userId    String   @unique
   user      User     @relation(fields: [userId], references: [id])
   key       String   @unique
   createdAt DateTime @default(now())
