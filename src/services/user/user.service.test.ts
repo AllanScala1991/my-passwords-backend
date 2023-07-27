@@ -1,9 +1,11 @@
+import { CryptographyModel } from "../../models/cryptography/cryptography";
 import { EncrypterModel } from "../../models/encrypter/encrypter.model";
 import { KeyModel } from "../../models/keys/keys";
 import { UUIDModel } from "../../models/uuid/uuid";
 import { KeyRepository } from "../../repositories/key/key.repository";
 import { UserRepository } from "../../repositories/user/user.repository";
 import { Bcrypt } from "../../utils/bcrypt/bcrypt";
+import { Crypto } from "../../utils/crypto/crypto";
 import { UUID } from "../../utils/uuid/uuid";
 import { KeyService } from "../key/key.service";
 import { UserService } from "./user.service";
@@ -14,7 +16,8 @@ describe("User Service Tests", () => {
     const keyRepository: KeyModel = new KeyRepository();
     const uuidService: UUIDModel = new UUID();
     const keyService: KeyService = new KeyService(keyRepository, uuidService);
-    const userService: UserService = new UserService(encrypter, userRepository, keyService);
+    const cryptoService: CryptographyModel = new Crypto();
+    const userService: UserService = new UserService(encrypter, userRepository, keyService, cryptoService);
     const user = {
         name: "Test",
         email: "test@mail.com",

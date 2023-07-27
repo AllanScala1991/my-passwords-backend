@@ -9,6 +9,8 @@ import { KeyService } from "../../services/key/key.service";
 import { KeyModel } from "../../models/keys/keys";
 import { KeyRepository } from "../../repositories/key/key.repository";
 import { UUID } from "../../utils/uuid/uuid";
+import { CryptographyModel } from "../../models/cryptography/cryptography";
+import { Crypto } from "../../utils/crypto/crypto";
 
 export class UserController {
     private userRepository: UserRepository;
@@ -16,7 +18,8 @@ export class UserController {
     private userService: UserService;
     private keyService: KeyService;
     private keyRepository: KeyModel;
-    private uuidService: UUIDModel
+    private uuidService: UUIDModel;
+    private cryptoService: CryptographyModel;
 
     constructor(){
         this.userRepository = new UserRepository();
@@ -24,7 +27,8 @@ export class UserController {
         this.keyRepository = new KeyRepository();
         this.uuidService = new UUID();
         this.keyService = new KeyService(this.keyRepository, this.uuidService);
-        this.userService = new UserService(this.encrypter, this.userRepository, this.keyService);
+        this.cryptoService = new Crypto();
+        this.userService = new UserService(this.encrypter, this.userRepository, this.keyService, this.cryptoService);
     }
 
     async createNewUser(req: Request, res: Response) {

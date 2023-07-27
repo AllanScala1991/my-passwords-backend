@@ -1,3 +1,4 @@
+import { CryptographyModel } from "../../models/cryptography/cryptography";
 import { EncrypterModel } from "../../models/encrypter/encrypter.model";
 import { ResponseModel } from "../../models/response/response.model";
 import { CreateUserModel } from "../../models/user/user.model";
@@ -9,7 +10,8 @@ export class UserService {
     constructor(
         private encrypter: EncrypterModel,
         private userRepository: UserRepository,
-        private keyService: KeyService
+        private keyService: KeyService,
+        private cryptoService: CryptographyModel
     ){}
 
     async createNewUser(user: CreateUserModel): Promise<ResponseModel> {
@@ -41,10 +43,12 @@ export class UserService {
         delete newUser.password;
 
         const key = this.keyService.generateSecretKey();
+        const vetor = this.cryptoService.createVetor();
 
         await this.keyService.create({
             userId: newUser.id,
-            key: key
+            key: key,
+            vetor: vetor.toString("utf-8")
         })
 
         return {status: 201, data: newUser};

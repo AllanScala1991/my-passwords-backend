@@ -35,6 +35,7 @@ model Keys {
   userId    String   @unique
   user      User     @relation(fields: [userId], references: [id])
   key       String   @unique
+  vetor     String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 }

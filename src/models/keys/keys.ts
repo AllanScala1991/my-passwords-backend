@@ -1,6 +1,7 @@
 export interface CreateKeyModel {
     userId: string
     key: string
+    vetor: string
     updatedAt?: Date
 }
 
