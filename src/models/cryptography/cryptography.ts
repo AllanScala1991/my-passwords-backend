@@ -4,6 +4,7 @@ export interface CreateCryptographyResponse {
 }
 
 export interface CryptographyModel {
-    createCryptography(password: string, secretKey: string): CreateCryptographyResponse
+    createCryptography(password: string, secretKey: string, vetor: Buffer): CreateCryptographyResponse
     loadCryptography(passwordEncrypted: string, secretKey: string, vetor: Buffer): string
+    createVetor(): Buffer
 }

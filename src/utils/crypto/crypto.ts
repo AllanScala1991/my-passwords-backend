@@ -1,10 +1,9 @@
 import crypto from "node:crypto";
 import { CreateCryptographyResponse, CryptographyModel } from "../../models/cryptography/cryptography";
-import "dotenv/config";
 
 export class Crypto implements CryptographyModel{
 
-    private createVetor(): Buffer {
+    createVetor(): Buffer {
         return crypto.randomBytes(16);
     }
 
@@ -18,8 +17,7 @@ export class Crypto implements CryptographyModel{
         return key;
     }
 
-    createCryptography(password: string, secretKey: string): CreateCryptographyResponse {
-        const vetor = this.createVetor();
+    createCryptography(password: string, secretKey: string, vetor: Buffer): CreateCryptographyResponse {
         const adjustedKey = this.adjustKeyLenght(secretKey, 32);
         let cipher = crypto.createCipheriv("aes-256-cbc", adjustedKey, vetor);
         let passwordEncrypted = cipher.update(password, "utf8", "hex");

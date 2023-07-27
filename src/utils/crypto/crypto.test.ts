@@ -6,13 +6,15 @@ describe("Crypto Tests", () => {
     let secretKey = "jest";
 
     test("Create crypthography", () => {
-        const pass = crypto.createCryptography(password, secretKey);
+        const vetor = crypto.createVetor();
+        const pass = crypto.createCryptography(password, secretKey, vetor);
 
         expect(pass.passwordEncrypted).not.toBeNull;
     })
 
     test("Load password encrypted", () => {
-        const pass = crypto.createCryptography(password, secretKey);
+        const vetor = crypto.createVetor();
+        const pass = crypto.createCryptography(password, secretKey, vetor);
 
         const loadPassword = crypto.loadCryptography(pass.passwordEncrypted, secretKey, pass.vetor);
 
