@@ -80,7 +80,7 @@ describe("Password Repository Tests", () => {
             updatedAt: new Date()
         }
 
-        jest.spyOn(prisma.password, "findUnique").mockImplementationOnce((): any => [passwordMock]);
+        jest.spyOn(prisma.password, "findUnique").mockImplementationOnce((): any => passwordMock);
 
         const password = await passwordRepository.findPasswordById("123");
 

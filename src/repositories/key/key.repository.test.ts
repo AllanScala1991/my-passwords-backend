@@ -1,14 +1,19 @@
+import { CryptographyModel } from "../../models/cryptography/cryptography";
 import { KeyModel } from "../../models/keys/keys";
+import { Crypto } from "../../utils/crypto/crypto";
 import prisma from "../../utils/prisma/prisma"
 import { KeyRepository } from "./key.repository";
 
 describe("Key Repository Tests", () => {
     const keyRepository: KeyModel = new KeyRepository();
+    const cryptoService: CryptographyModel = new Crypto();
 
     test("Create key successfully", async () => {
         jest.spyOn(prisma.keys, "create").mockImplementationOnce(():any => {});
 
-        await keyRepository.create({userId: "123", key: "321"});
+        const vetor = cryptoService.createVetor();
+
+        await keyRepository.create({userId: "123", key: "321", vetor: vetor.toString("utf-8")});
 
         expect(prisma.keys.create).toBeCalled;
     });
