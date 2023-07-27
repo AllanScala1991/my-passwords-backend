@@ -1,11 +1,21 @@
 import { KeyModel } from "../../models/keys/keys"
+import { UUIDModel } from "../../models/uuid/uuid";
 import { KeyRepository } from "../../repositories/key/key.repository"
+import { UUID } from "../../utils/uuid/uuid";
 import { KeyService } from "./key.service";
 
 describe("Key Service Test", () => {
     const keyRepository: KeyModel = new KeyRepository();
-    const keyService: KeyService = new KeyService(keyRepository);
+    const uuidService: UUIDModel = new UUID();
+    const keyService: KeyService = new KeyService(keyRepository, uuidService);
 
+    test("Generate UUID v4", () => {
+        const uuid = keyService.generateSecretKey();
+
+        expect(uuid).not.toBeNull;
+        expect(typeof uuid).toEqual("string");
+    });
+    
     test("Create new key", async () => {
         jest.spyOn(keyRepository, "create").mockImplementationOnce(():any => {});
 

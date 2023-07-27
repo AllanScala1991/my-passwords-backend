@@ -1,9 +1,15 @@
 import { CreateKeyModel, KeyModel, KeyReponseModel } from "../../models/keys/keys";
+import { UUIDModel } from "../../models/uuid/uuid";
 
 export class KeyService {
     constructor(
-        private keyRepository: KeyModel
+        private keyRepository: KeyModel,
+        private uuidService: UUIDModel
     ){}
+
+    generateSecretKey(): string {
+        return this.uuidService.generatev4();
+    }
 
     async create(data: CreateKeyModel): Promise<void> {
         try {
