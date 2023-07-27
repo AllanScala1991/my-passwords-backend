@@ -68,6 +68,42 @@ describe("Password Repository Tests", () => {
         expect(passwords.length).toBeGreaterThan(0);
         expect(passwords[0].title).toEqual("find by title");
     })
+
+    test("Find password by id", async () => {
+        const passwordMock = {
+            id: "123",
+            userId: "456",
+            title: "find by title",
+            username: "test",
+            password: "123",
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }
+
+        jest.spyOn(prisma.password, "findUnique").mockImplementationOnce((): any => [passwordMock]);
+
+        const password = await passwordRepository.findPasswordById("123");
+
+        expect(password.id).toEqual("123");
+    })
+
+    test("Find all passwords by user id", async () => {
+        const passwordMock = {
+            id: "123",
+            userId: "456",
+            title: "find by title",
+            username: "test",
+            password: "123",
+            createdAt: new Date(),
+            updatedAt: new Date()
+        }
+
+        jest.spyOn(prisma.password, "findMany").mockImplementationOnce((): any => [passwordMock]);
+
+        const password = await passwordRepository.findAllPasswordsByUserId("456");
+
+        expect(password[0].userId).toEqual("456");
+    })
     
     test("Delete password by id", async () => {
         jest.spyOn(prisma.password, "delete").mockImplementationOnce((): any => {});

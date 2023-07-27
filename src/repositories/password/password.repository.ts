@@ -24,6 +24,22 @@ export class PasswordRepository implements PasswordModel {
         });
     }
 
+    async findPasswordById(id: string): Promise<PasswordResponseModel> {
+        return await prisma.password.findUnique({
+            where: {
+                id: id
+            }
+        })
+    }
+
+    async findAllPasswordsByUserId(userId: string): Promise<PasswordResponseModel[]> {
+        return await prisma.password.findMany({
+            where: {
+                userId: userId
+            }
+        })
+    }
+
     async deletePasswordById(id: string): Promise<void> {
         await prisma.password.delete({
             where: {
