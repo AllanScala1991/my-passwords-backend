@@ -2,12 +2,14 @@ import { EncrypterModel } from "../../models/encrypter/encrypter.model";
 import { ResponseModel } from "../../models/response/response.model";
 import { CreateUserModel } from "../../models/user/user.model";
 import { UserRepository } from "../../repositories/user/user.repository";
+import { KeyService } from "../key/key.service";
 
 export class UserService {
 
     constructor(
         private encrypter: EncrypterModel,
-        private userRepository: UserRepository
+        private userRepository: UserRepository,
+        private keyService: KeyService
     ){}
 
     async createNewUser(user: CreateUserModel): Promise<ResponseModel> {
@@ -37,6 +39,13 @@ export class UserService {
         const newUser = await this.userRepository.create(user);
 
         delete newUser.password;
+
+        const key = this.keyService.generateSecretKey();
+
+        await this.keyService.create({
+            userId: newUser.id,
+            key: key
+        })
 
         return {status: 201, data: newUser};
     }

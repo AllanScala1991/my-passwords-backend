@@ -4,16 +4,27 @@ import { UserRepository } from "../../repositories/user/user.repository";
 import { UserService } from "../../services/user/user.service";
 import { Bcrypt } from "../../utils/bcrypt/bcrypt";
 import { CreateUserModel } from "../../models/user/user.model";
+import { UUIDModel } from "../../models/uuid/uuid";
+import { KeyService } from "../../services/key/key.service";
+import { KeyModel } from "../../models/keys/keys";
+import { KeyRepository } from "../../repositories/key/key.repository";
+import { UUID } from "../../utils/uuid/uuid";
 
 export class UserController {
     private userRepository: UserRepository;
     private encrypter: EncrypterModel;
     private userService: UserService;
+    private keyService: KeyService;
+    private keyRepository: KeyModel;
+    private uuidService: UUIDModel
 
     constructor(){
         this.userRepository = new UserRepository();
         this.encrypter = new Bcrypt();
-        this.userService = new UserService(this.encrypter, this.userRepository);
+        this.keyRepository = new KeyRepository();
+        this.uuidService = new UUID();
+        this.keyService = new KeyService(this.keyRepository, this.uuidService);
+        this.userService = new UserService(this.encrypter, this.userRepository, this.keyService);
     }
 
     async createNewUser(req: Request, res: Response) {

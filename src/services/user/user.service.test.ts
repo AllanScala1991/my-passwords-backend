@@ -1,12 +1,20 @@
 import { EncrypterModel } from "../../models/encrypter/encrypter.model";
+import { KeyModel } from "../../models/keys/keys";
+import { UUIDModel } from "../../models/uuid/uuid";
+import { KeyRepository } from "../../repositories/key/key.repository";
 import { UserRepository } from "../../repositories/user/user.repository";
 import { Bcrypt } from "../../utils/bcrypt/bcrypt";
+import { UUID } from "../../utils/uuid/uuid";
+import { KeyService } from "../key/key.service";
 import { UserService } from "./user.service";
 
 describe("User Service Tests", () => {
     const encrypter: EncrypterModel = new Bcrypt();
     const userRepository: UserRepository = new UserRepository();
-    const userService: UserService = new UserService(encrypter, userRepository);
+    const keyRepository: KeyModel = new KeyRepository();
+    const uuidService: UUIDModel = new UUID();
+    const keyService: KeyService = new KeyService(keyRepository, uuidService);
+    const userService: UserService = new UserService(encrypter, userRepository, keyService);
     const user = {
         name: "Test",
         email: "test@mail.com",
@@ -19,7 +27,8 @@ describe("User Service Tests", () => {
         jest.spyOn(userRepository, "findUserByEmail").mockImplementation((): any => {return null});
         jest.spyOn(userRepository, "create").mockImplementationOnce((): any => {
             return {status: 201, data: user};
-        })
+        });
+        jest.spyOn(keyService, "create").mockImplementationOnce((): any => {});
 
         const createUser = await userService.createNewUser(user);
 
