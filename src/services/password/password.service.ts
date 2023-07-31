@@ -12,7 +12,7 @@ export class PasswordService {
     ){}
 
     async create(data: CreatePasswordModel): Promise<ResponseModel> {
-        if(!data.userId || !data.title || data.username || data.password) {
+        if(!data.userId || !data.title || !data.username || !data.password) {
             return {status: 400, message: "Todos os campos devem ser preenchidos."}
         }
 
@@ -35,7 +35,7 @@ export class PasswordService {
 
         const isPasswordExists = await this.passwordRepository.findPasswordById(id);
 
-        if(isPasswordExists == null) return {status: 404, message: "Cadastro de senha não localizado."};
+        if(isPasswordExists == null) return {status: 404, message: "Registro de senha não localizado."};
 
         const user = await this.keyService.findKeyByUserId(data.userId);
         const crypto = await this.cryptoService.createCryptography(data.password, user.key, Buffer.from(user.vetor, "utf-8"));
@@ -44,7 +44,7 @@ export class PasswordService {
 
         await this.passwordRepository.updatePassword(id, data);
 
-        return {status: 200, message: "Cadastro atualizado com sucesso."}
+        return {status: 200, message: "Registro atualizado com sucesso."}
     }
 
     async findByTitle(title: string): Promise<ResponseModel>{
@@ -52,11 +52,21 @@ export class PasswordService {
 
         const passwords = await this.passwordRepository.findPasswordByTitle(title);
 
-        if(passwords == null) return {status: 404, message: "Nenhum cadastro localizado."};
+        if(passwords.length <= 0) return {status: 404, message: "Nenhum registro localizado."};
 
         for(let data of passwords) {
             delete data.password
         }
+
+        return {status: 200, data: passwords}
+    }
+
+    async findAllPasswordByUserId(userId): Promise<ResponseModel> {
+        if(!userId) return {status: 400, message: "ID inválido."}
+
+        const passwords = await this.passwordRepository.findAllPasswordsByUserId(userId);
+
+        if(passwords.length <= 0) return {status: 404, message: "Nenhum registro localizado."}
 
         return {status: 200, data: passwords}
     }
@@ -66,11 +76,11 @@ export class PasswordService {
 
         const isPasswordExists = await this.passwordRepository.findPasswordById(id);
 
-        if(isPasswordExists == null) return {status: 404, message: "Cadastro de senha não localizado."};
+        if(isPasswordExists == null) return {status: 404, message: "Registro de senha não localizado."};
 
         await this.passwordRepository.deletePasswordById(id);
 
-        return{status: 200, message: "Cadastro deletado com sucesso."}
+        return{status: 200, message: "Registro deletado com sucesso."}
     }
 
     async showPassword(userId: string): Promise<ResponseModel>{
