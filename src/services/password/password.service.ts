@@ -17,7 +17,7 @@ export class PasswordService {
         }
 
         const user = await this.keyService.findKeyByUserId(data.userId);
-        const passwordCryptography = await this.cryptoService.createCryptography(data.password, user.key, Buffer.from(user.vetor, "utf-8"));
+        const passwordCryptography = await this.cryptoService.createCryptography(data.password, user.key, Buffer.from(user.vetor, "base64"));
 
         data.password = passwordCryptography.passwordEncrypted;
 
@@ -38,7 +38,7 @@ export class PasswordService {
         if(isPasswordExists == null) return {status: 404, message: "Registro de senha não localizado."};
 
         const user = await this.keyService.findKeyByUserId(data.userId);
-        const crypto = await this.cryptoService.createCryptography(data.password, user.key, Buffer.from(user.vetor, "utf-8"));
+        const crypto = await this.cryptoService.createCryptography(data.password, user.key, Buffer.from(user.vetor, "base64"));
         data.password = crypto.passwordEncrypted;
         data.updatedAt = new Date();
 

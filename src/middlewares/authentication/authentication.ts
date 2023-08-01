@@ -11,9 +11,9 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
     if(!auth) return res.status(403).send("Acesso não autorizado.");
 
     const token = auth.split(" ");
-
+    
     try {
-        tokenService.validate({token: token[0]})
+        tokenService.validate({token: token[1]})
         return next()
     } catch (error) {
         return res.status(500).json(error.message);

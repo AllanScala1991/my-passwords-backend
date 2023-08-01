@@ -48,7 +48,7 @@ export class UserService {
         await this.keyService.create({
             userId: newUser.id,
             key: key,
-            vetor: vetor.toString("utf-8")
+            vetor: vetor.toString('base64')
         })
 
         return {status: 201, data: newUser};
