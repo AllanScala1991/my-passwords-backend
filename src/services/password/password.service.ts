@@ -87,7 +87,7 @@ export class PasswordService {
         const userSecret = await this.keyService.findKeyByUserId(userId);
         const user = await this.passwordRepository.findPasswordById(passwordId);
 
-        const decriptedPassword = await this.cryptoService.loadCryptography(user.password, userSecret.key, Buffer.from(userSecret.vetor, "utf-8"));
+        const decriptedPassword = await this.cryptoService.loadCryptography(user.password, userSecret.key, Buffer.from(userSecret.vetor, "base64"));
 
         return {status: 200, data: {decriptedPassword}}
     }

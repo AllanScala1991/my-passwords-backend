@@ -19,8 +19,8 @@ export class Crypto implements CryptographyModel{
 
     createCryptography(password: string, secretKey: string, vetor: Buffer): CreateCryptographyResponse {
         const adjustedKey = this.adjustKeyLenght(secretKey, 32);
-        let cipher = crypto.createCipheriv("aes-256-cbc", adjustedKey, vetor);
-        let passwordEncrypted = cipher.update(password, "base64", "hex");
+        let cipher = crypto.createCipheriv("aes256", adjustedKey, vetor);
+        let passwordEncrypted = cipher.update(password, "utf8", "hex");
         passwordEncrypted += cipher.final("hex");
 
         return { passwordEncrypted, vetor}
@@ -29,9 +29,9 @@ export class Crypto implements CryptographyModel{
     loadCryptography(passwordEncrypted: string, secretKey: string, vetor: Buffer): string {
         const password = passwordEncrypted.slice(0, 32);
         const adjustedKey = this.adjustKeyLenght(secretKey, 32);
-        const decipher = crypto.createDecipheriv("aes-256-cbc", adjustedKey, vetor);
-        let decryptedPassword = decipher.update(password, "hex", "base64");
-        decryptedPassword += decipher.final("base64");
+        const decipher = crypto.createDecipheriv("aes256", adjustedKey, vetor);
+        let decryptedPassword = decipher.update(password, "hex", "utf8");
+        decryptedPassword += decipher.final("utf8");
         return decryptedPassword
     }
     
