@@ -19,3 +19,5 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
         return res.status(500).json(error.message);
     }
 })
+
+export default app;
