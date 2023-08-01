@@ -20,4 +20,20 @@ describe("Crypto Tests", () => {
 
         expect(loadPassword).toEqual("test");
     })
+
+    test("Adjust key large size length", () => {
+        const keyInvalid = "1234567890123456789012345678901234567890";
+        const vetor = crypto.createVetor();
+        const pass = crypto.createCryptography(password, keyInvalid, vetor);
+
+        expect(pass.passwordEncrypted).not.toBeNull;
+    })
+
+    test("Adjust key correct length", () => {
+        const keyInvalid = "11111111111111111111111111111111";
+        const vetor = crypto.createVetor();
+        const pass = crypto.createCryptography(password, keyInvalid, vetor);
+
+        expect(pass.passwordEncrypted).not.toBeNull;
+    })
 })
