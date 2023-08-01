@@ -83,9 +83,9 @@ export class PasswordService {
         return{status: 200, message: "Registro deletado com sucesso."}
     }
 
-    async showPassword(userId: string): Promise<ResponseModel>{
+    async showPassword(userId: string, passwordId: string): Promise<ResponseModel>{
         const userSecret = await this.keyService.findKeyByUserId(userId);
-        const user = await this.passwordRepository.findPasswordById(userId);
+        const user = await this.passwordRepository.findPasswordById(passwordId);
 
         const decriptedPassword = await this.cryptoService.loadCryptography(user.password, userSecret.key, Buffer.from(userSecret.vetor, "utf-8"));
 

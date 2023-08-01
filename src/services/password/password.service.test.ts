@@ -225,7 +225,7 @@ describe("Password Service Tests", () => {
             return {decriptedPassword: "123"};
         })
 
-        const loadPassword = await passwordService.showPassword("123");
+        const loadPassword = await passwordService.showPassword("123", "321");
 
         expect(loadPassword.status).toEqual(200);
         expect(loadPassword.data).not.toBeNull;
