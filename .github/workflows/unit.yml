@@ -10,7 +10,7 @@ on:
         - develop
         - master
 
-  jobs:
+jobs:
     build-and-test:
       runs-on: ubuntu-latest
   
