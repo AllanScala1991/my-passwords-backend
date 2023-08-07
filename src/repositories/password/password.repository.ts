@@ -19,7 +19,9 @@ export class PasswordRepository implements PasswordModel {
     async findPasswordByTitle(title: string): Promise<PasswordResponseModel[]> {
         return await prisma.password.findMany({
             where: {
-                title: title
+                title: {
+                    startsWith: title
+                }
             }
         });
     }
