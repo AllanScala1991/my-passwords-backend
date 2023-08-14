@@ -16,7 +16,7 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
         tokenService.validate({token: token[1]})
         return next()
     } catch (error) {
-        return res.status(500).json(error.message);
+        return res.status(403).json("Acesso não autorizado.");
     }
 })
 
