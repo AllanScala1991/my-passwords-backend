@@ -6,9 +6,8 @@
   "scripts": {
     "dev": "nodemon src/server.ts",
     "test": "jest --coverage",
-    "build": "tsc",
-    "start": "npm run migrate && node build/src/server.js",
-    "migrate": "npx migrate dev"
+    "build": "rm -rf ./build && tsc",
+    "start": "node ./build/src/server.js"
   },
   "keywords": [],
   "author": "",

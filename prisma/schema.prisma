@@ -15,27 +15,27 @@ model User {
   password  String
   createdAt DateTime   @default(now())
   updatedAt DateTime   @default(now())
+  Keys      Keys?
   Password  Password[]
-  Keys      Keys[]
 }
 
 model Password {
   id        String   @id @default(uuid())
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
   title     String
   username  String
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Keys {
   id        String   @id @default(uuid())
   userId    String   @unique
-  user      User     @relation(fields: [userId], references: [id])
   key       String   @unique
   vetor     String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
 }
