@@ -7,7 +7,7 @@
     "dev": "nodemon src/server.ts",
     "test": "jest --coverage",
     "build": "tsc",
-    "start": "migrate && node build/src/server.js",
+    "start": "npm run migrate && node build/src/server.js",
     "migrate": "npx migrate dev"
   },
   "keywords": [],
