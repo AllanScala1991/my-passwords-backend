@@ -90,6 +90,8 @@ export class UserService {
         const isUserExists = await this.userRepository.findUserById(id);
     
         if(!isUserExists) return { status: 400, message: "Usuário não localizado." }
+
+        await this.keyService.deleteKeyByUserId(id);
     
         await this.userRepository.deleteUserById(id);
     

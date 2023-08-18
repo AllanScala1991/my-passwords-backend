@@ -34,4 +34,12 @@ export class KeyService {
             new Error(error.message);
         }
     }
+
+    async deleteKeyByUserId(userId: string): Promise<void> {
+        try {
+            await this.keyRepository.deleteKeyByUserId(userId)
+        } catch (error) {
+            new Error(error.message)
+        }
+    }
 }

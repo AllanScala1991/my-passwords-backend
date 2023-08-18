@@ -14,4 +14,5 @@ export interface KeyModel {
     create(data: CreateKeyModel): Promise<void>
     findKeyByUserId(userId: string): Promise<KeyReponseModel>
     updateKeyById(keyId: string, key: string): Promise<void>
+    deleteKeyByUserId(userId: string): Promise<void>
 }
