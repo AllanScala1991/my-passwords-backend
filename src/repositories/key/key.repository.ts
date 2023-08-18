@@ -26,5 +26,13 @@ export class KeyRepository implements KeyModel {
             }
         })
     }
+
+    async deleteKeyByUserId(userId: string): Promise<void> {
+        await prisma.keys.delete({
+            where: {
+                userId: userId
+            }
+        })
+    }
     
 }
