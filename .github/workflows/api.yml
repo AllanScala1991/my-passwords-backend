@@ -32,19 +32,14 @@ jobs:
         with:
           node-version: 18
 
-      - name: Build and Run Docker Container
-        run: |
-          docker build -t node-app .
-          docker run -d -p 3000:3000 -e DATABASE_URL=postgresql://postgres:root@localhost:5432/mypasswords -e SECRET_KEY=bbd09823c6d48a470098e96df6718cb6  --name node-container node-app    
-
       - name: Install Dependencies
-        run: docker exec node-container npm install
+        run: npm install
 
       - name: Create Prisma Database
-        run: docker exec node-container npx prisma migrate dev
+        run: npx prisma migrate dev
 
       - name: Iniciar servidor Node
-        run: docker exec node-container npm run dev &
+        run: npm run dev &
 
       - name: Setup Java
         uses: actions/setup-java@v2
