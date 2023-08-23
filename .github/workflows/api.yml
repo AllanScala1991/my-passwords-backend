@@ -1,0 +1,61 @@
+name: API Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+env:
+    DATABASE_URL: postgresql://postgres:root@localhost:5432/mypasswords
+    SECRET_KEY: bbd09823c6d48a470098e96df6718cb6
+    LOCALHOST: http://localhost:5173
+
+jobs:   
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+        postgres:
+          image: postgres:14.5
+          env:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: root
+          ports:
+            - 5432:5432
+          options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Create Prisma Database
+        run: npx prisma migrate dev
+
+      - name: Construir e iniciar servidor web local
+        run: npm run dev &
+
+      - name: Setup Node.js
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: 20.0.2
+
+      - name: Clone Java repository
+        run: git clone https://github.com/AllanScala1991/mypasswords-backend-api-tests
+
+      - name: Install Cypress dependencies
+        run: cd mypasswords-backend-api-tests && mvn clean install
+
+      - name: Run API tests
+        run: cd mypasswords-backend-api-tests && mvn test -test=Runner

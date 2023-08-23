@@ -17,6 +17,9 @@ export class PasswordService {
         }
 
         const user = await this.keyService.findKeyByUserId(data.userId);
+
+        if(!user) return {status: 400, message: "Erro ao localizar a chave do usuário."};
+
         const passwordCryptography = await this.cryptoService.createCryptography(data.password, user.key, Buffer.from(user.vetor, "base64"));
 
         data.password = passwordCryptography.passwordEncrypted;
@@ -38,6 +41,7 @@ export class PasswordService {
         if(isPasswordExists == null) return {status: 404, message: "Registro de senha não localizado."};
 
         const user = await this.keyService.findKeyByUserId(data.userId);
+        if(!user) return {status: 400, message: "Erro ao localizar a chave do usuário."};
         const crypto = await this.cryptoService.createCryptography(data.password, user.key, Buffer.from(user.vetor, "base64"));
         data.password = crypto.passwordEncrypted;
         data.updatedAt = new Date();
@@ -85,7 +89,12 @@ export class PasswordService {
 
     async showPassword(userId: string, passwordId: string): Promise<ResponseModel>{
         const userSecret = await this.keyService.findKeyByUserId(userId);
+
+        if(!userSecret) return {status: 400, message: "ID de usuário inválido."};
+
         const user = await this.passwordRepository.findPasswordById(passwordId);
+
+        if(!user) return {status: 400, message: "ID de password inválido."};
 
         const decriptedPassword = await this.cryptoService.loadCryptography(user.password, userSecret.key, Buffer.from(userSecret.vetor, "base64"));
 
