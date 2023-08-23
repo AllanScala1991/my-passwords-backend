@@ -35,7 +35,7 @@ jobs:
       - name: Build and Run Docker Container
         run: |
           docker build -t node-app .
-          docker run -d -p 3000:3000 --name node-container node-app    
+          docker run -d -p 3000:3000 -e DATABASE_URL=postgresql://postgres:root@localhost:5432/mypasswords -e SECRET_KEY=bbd09823c6d48a470098e96df6718cb6  --name node-container node-app    
 
       - name: Install Dependencies
         run: docker exec node-container npm install
