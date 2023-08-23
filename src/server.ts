@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 
 const app = express();
-const port = parseInt(`${process.env.PORT}`) || 3000;
+const port = parseInt(`${process.env.PORT}`) || 8002;
 
 const whitelist = [process.env.LOCALHOST]
 const corsOptions = {
@@ -24,7 +24,6 @@ app.use(require("./routes/user/user.route"));
 app.use(require("./routes/login/login.route"));
 app.use(require("./routes/password/password.route"));
 
-const server = app.listen(port, "127.0.0.1", () => {
-  const ip: any = server.address();
-  console.log(`Server is running in PORT: ${ip.address}:${port}`)
+app.listen(port, () => {
+    console.log(`Server is running in PORT: ${port}`)
 })
