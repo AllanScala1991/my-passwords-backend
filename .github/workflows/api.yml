@@ -4,14 +4,10 @@ on:
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
 
 env:
     DATABASE_URL: postgresql://postgres:root@localhost:5432/mypasswords
     SECRET_KEY: bbd09823c6d48a470098e96df6718cb6
-    LOCALHOST: http://localhost:5173
 
 jobs:   
   build:
@@ -45,16 +41,16 @@ jobs:
       - name: Construir e iniciar servidor web local
         run: npm run dev &
 
-      - name: Setup Node.js
+      - name: Setup Java
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
           java-version: 20.0.2
 
-      - name: Clone Java repository
+      - name: Clone Tests repository
         run: git clone https://github.com/AllanScala1991/mypasswords-backend-api-tests
 
-      - name: Install Java dependencies
+      - name: Install Test dependencies
         run: cd mypasswords-backend-api-tests && mvn clean install
 
       - name: Run API tests
