@@ -32,14 +32,19 @@ jobs:
         with:
           node-version: 18
 
+      - name: Build and Run Docker Container
+        run: |
+          docker build -t node-app .
+          docker run -d -p 3000:3000 --name node-container node-app    
+
       - name: Install Dependencies
-        run: npm install
+        run: docker exec node-container npm install
 
       - name: Create Prisma Database
-        run: npx prisma migrate dev
+        run: docker exec node-container npx prisma migrate dev
 
-      - name: Construir e iniciar servidor web local
-        run: npm run dev &
+      - name: Iniciar servidor Node
+        run: docker exec node-container npm run dev &
 
       - name: Setup Java
         uses: actions/setup-java@v2
