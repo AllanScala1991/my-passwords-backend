@@ -54,8 +54,8 @@ jobs:
       - name: Clone Java repository
         run: git clone https://github.com/AllanScala1991/mypasswords-backend-api-tests
 
-      - name: Install Cypress dependencies
+      - name: Install Java dependencies
         run: cd mypasswords-backend-api-tests && mvn clean install
 
       - name: Run API tests
-        run: cd mypasswords-backend-api-tests && mvn test -test=Runner
+        run: cd mypasswords-backend-api-tests && mvn test -Dtest=Runner
