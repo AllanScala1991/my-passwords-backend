@@ -41,22 +41,6 @@ jobs:
       - name: Iniciar servidor Node
         run: npm run dev &
 
-      - name: Wait for Application to Start
-        run: |
-          timeout=120
-          while ! curl -s http://localhost:3000/health -o /dev/null; do
-            sleep 5
-            timeout=$((timeout - 5))
-            if [ $timeout -le 0 ]; then
-              echo "Application did not start in time."
-              exit 1
-            fi
-          done
-
-      - name: Set Application URL as Output
-        id: app_url
-        run: echo "::set-output name=app_url::http://localhost:3000"  
-
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
