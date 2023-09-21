@@ -15,7 +15,8 @@ Backend de um projeto pessoal de gerenciamento de senhas.
 
 Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de ambiente no seu .env
 
-`DATABASE_URL`
+`DATABASE_URL` -> Referente a URL do banco de dados
+`LOCALHOST` -> referente a URL do frontend
 
 ## Rodando localmente
 
